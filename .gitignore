@@ -2,3 +2,4 @@ vendor
 composer.phar
 .idea
 src/config.php
+test.php
