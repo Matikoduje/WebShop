@@ -1,32 +1,20 @@
 CREATE TABLE `users` (
   `userId` INT NOT NULL AUTO_INCREMENT,
-  `userEmail` VARCHAR(60) UNIQUE NOT NULL,
-  `userName` VARCHAR(60) NOT NULL,
-  `userSurname` VARCHAR(60) NOT NULL,
+  `userFirstName` VARCHAR(60) NOT NULL,
+  `userLastName` VARCHAR(60) NOT NULL,
+  `userLogin` VARCHAR(60) UNIQUE NOT NULL,
   `userPassword` VARCHAR(255) NOT NULL,
+  `userEmail` VARCHAR(60) UNIQUE NOT NULL,
+  `addressCity` VARCHAR(60),
+  `addressCode` VARCHAR(6),
+  `addressStreet` VARCHAR(255),
+  `addressNumber` VARCHAR(10),
   PRIMARY KEY (`userId`)
-);
-
-CREATE TABLE `items` (
-  `itemId` INT NOT NULL AUTO_INCREMENT,
-  `itemName` VARCHAR(60) NOT NULL,
-  `itemPrice` DECIMAL(11,4) NOT NULL,
-  `itemDescription` VARCHAR(255) NOT NULL,
-  `itemQuantity` INT,
-  PRIMARY KEY (`itemId`)
-);
-
-CREATE TABLE `images` (
-  `imageId` INT NOT NULL AUTO_INCREMENT,
-  `itemId` INT NOT NULL,
-  `imageLink` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`imageId`),
-  FOREIGN KEY (`itemId`) REFERENCES items(`itemId`)
 );
 
 CREATE TABLE `admins` (
   `adminId` INT NOT NULL AUTO_INCREMENT,
-  `adminEmail` VARCHAR(60) NOT NULL,
+  `adminEmail` VARCHAR(60) UNIQUE NOT NULL,
   `adminLogin` VARCHAR(60) UNIQUE NOT NULL,
   `adminPassword` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`adminId`)
@@ -42,23 +30,70 @@ CREATE TABLE `messages` (
   FOREIGN KEY (`userId`) REFERENCES `users`(`userId`)
 );
 
+CREATE TABLE `products_category` (
+  `productCategoryId` INT NOT NULL AUTO_INCREMENT,
+  `productCategoryName` VARCHAR(60) NOT NULL,
+  PRIMARY KEY (`productCategoryId`)
+);
+
+CREATE TABLE `products` (
+  `productId` INT NOT NULL AUTO_INCREMENT,
+  `productName` VARCHAR(60) NOT NULL,
+  `productPrice` DECIMAL(11,4) NOT NULL,
+  `productDescription` VARCHAR(255) NOT NULL,
+  `productCategory` INT NOT NULL,
+  `productQuantity` INT,
+  PRIMARY KEY (`productId`),
+  FOREIGN KEY (`productCategory`) REFERENCES `products_category`(`productCategoryId`)
+);
+
+CREATE TABLE `images` (
+  `imageId` INT NOT NULL AUTO_INCREMENT,
+  `productId` INT NOT NULL,
+  `imageLink` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`imageId`),
+  FOREIGN KEY (`productId`) REFERENCES products(`productId`)
+);
+
+CREATE TABLE `orders_status` (
+  `orderStatusId` INT NOT NULL AUTO_INCREMENT,
+  `orderStatusDescription` VARCHAR(255),
+  PRIMARY KEY (`orderStatusId`)
+);
+
+CREATE TABLE `payment_method` (
+  `paymentMethodId` INT NOT NULL AUTO_INCREMENT,
+  `paymentMethodDesc` VARCHAR(255),
+  PRIMARY KEY (`paymentMethodId`)
+);
+
 CREATE TABLE `orders` (
   `orderId` INT NOT NULL AUTO_INCREMENT,
   `userId` INT NOT NULL,
-  `orderData` DATETIME NOT NULL,
-  `orderValue` DECIMAL(11,4) NOT NULL,
-  `orderIsPaid` TINYINT(1) DEFAULT 0,
-  `orderIsRealized` TINYINT(1) DEFAULT 0,
+  `orderStatusId` INT,
+  `paymentMethodId` INT,
+  `orderDate` DATETIME NOT NULL,
+  `isOrderEdited` TINYINT(1) DEFAULT 1,
+  `isOrderConfirmed` TINYINT(1) DEFAULT 0,
+  `isInvoiceIssued` TINYINT(1) DEFAULT 0,
+  `isInvoicePaid` TINYINT(1) DEFAULT 0,
+  `invoiceNumber` INT NOT NULL,
+  `invoiceDate` DATETIME,
   PRIMARY KEY (`orderId`),
-  FOREIGN KEY (`userId`) REFERENCES `users`(`userId`)
+  FOREIGN KEY (`userId`) REFERENCES `users`(`userId`),
+  FOREIGN KEY (`orderStatusId`) REFERENCES `orders_status`(`orderStatusId`),
+  FOREIGN KEY (`paymentMethodId`) REFERENCES `payment_method` (`paymentMethodId`)
 );
 
-CREATE TABLE `ordersSpec` (
+
+CREATE TABLE `order_products` (
+  `orderProductId` INT NOT NULL AUTO_INCREMENT,
   `orderId` INT NOT NULL,
-  `itemId` INT NOT NULL,
-  `orderedItemQuantity` INT NOT NULL,
-  `orderedItemPrice` DECIMAL(11,4) NOT NULL,
-  `orderedItemValue` DECIMAL(11,4) NOT NULL,
+  `productId` INT NOT NULL,
+  `orderProductQuantity` INT NOT NULL,
+  `orderProductPrice` DECIMAL(11,4) NOT NULL,
+  `orderProductValue` DECIMAL(11,4) NOT NULL,
+  PRIMARY KEY (`orderProductId`),
   FOREIGN KEY (`orderId`) REFERENCES `orders`(`orderId`),
-  FOREIGN KEY (`itemId`) REFERENCES `items`(`itemId`)
+  FOREIGN KEY (`productId`) REFERENCES `products`(`productId`)
 );
