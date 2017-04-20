@@ -13,6 +13,10 @@ function eraseCookie(name) {
     createCookie(name, "", -1);
 }
 
+function createAlert(message, alertType) {
+    $('#forAlert').append('<div class="alert alert-' + alertType + ' fade in"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>')
+};
+
 $(document).ready(function () {
 
     function menuLogged() {

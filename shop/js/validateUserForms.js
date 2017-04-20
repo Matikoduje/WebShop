@@ -1,9 +1,5 @@
 $(document).ready(function () {
 
-    function createAlert(message, alertType) {
-        $('#forAlert').append('<div class="alert alert-' + alertType + ' fade in"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>')
-    };
-
     function validateRegisterForm(login, email, password1, password2, name, surname) {
 
         if (login == '' || email == '' || password1 == '' || password2 == '' || name == '' || surname == '') {
@@ -36,7 +32,7 @@ $(document).ready(function () {
             return false;
         }
 
-        if (password1 != password2) {
+        if (password1 !== password2) {
             createAlert('Podane hasła są różne', 'warning');
             $('.alert').alert();
             return false;

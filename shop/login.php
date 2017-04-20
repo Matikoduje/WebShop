@@ -1,55 +1,9 @@
 <?php
 require 'templates/header.php';
 
-if (isset($_SESSION['user'])) {
-    header('Location: index.php');
-    exit;
-}
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-//    if (isset($_POST['loginLogin'], $_POST['loginPassword'])) {
-//
-//        $login = $_POST['loginLogin'];
-//        $pass = $_POST['loginPassword'];
-//
-//        try {
-//            $controller = new UserController();
-//            $repository = new UserRepository();
-//            $loadUser = $controller->load($repository, $login, $pass);
-//            $_SESSION['user'] = serialize($loadUser);
-//            unset($controller, $repository, $loadUser);
-//            header('Location: index.php');
-//            exit;
-//        } catch (Exception $e) {
-//            $msg = new Alert($e->getMessage(), 'danger');
-//        }
-//
-//    } else if (isset($_POST['login'], $_POST['email'], $_POST['password1'], $_POST['name'], $_POST['surname'], $_POST['password2'], $_POST['isAccepted'])) {
-//
-//        $isAccepted = $_POST['isAccepted'];
-//        if ($isAccepted == true) {
-//            try {
-//                $controller = new UserController();
-//                $repository = new UserRepository();
-//                $controller->save($repository);
-//                $msg = new Alert("Rejestracja przebiegła pomyślnie. Zapraszamy do logowania", "success");
-//                unset($controller, $repository);
-//            } catch (Exception $e) {
-//                $msg = new Alert($e->getMessage(), 'danger');
-//            }
-//        } else {
-//            $msg = new Alert("Proszę zapoznać się z warunkami korzystania z serwisu", "info");
-//        }
-//    }
-}
 ?>
     <script src="js/validateUserForms.js?a=2"></script>
     <div class="row" id="forAlert">
-        <?php
-        if (isset($msg)) {
-            echo $msg->getAlert();
-        }
-        ?>
     </div>
     <div class="row">
         <div class="col-sm-5">

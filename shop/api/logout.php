@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-if (isset($_SESSION['sessionId'], $_SESSION['userId'], $_SESSION['token'])) {
+if (isset($_SESSION['user'], $_SESSION['token'])) {
     $_SESSION = array();
 
     if (ini_get("session.use_cookies")) {

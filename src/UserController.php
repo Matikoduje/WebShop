@@ -12,7 +12,7 @@ class UserController implements ControllerInterface
         $repository->save($checkedUser, 'users');
     }
 
-    public function load(RepositoryInterface $repository, $login, $password, $isSetSession)
+    public function load(RepositoryInterface $repository, $login, $password)
     {
         $user = $repository->load('userLogin', $login, 'users', 'User');
         $userPassword = $user->getUserPassword();
@@ -20,12 +20,7 @@ class UserController implements ControllerInterface
             unset($user);
             throw new Exception("Podano nie prawidłowy login bądź hasło");
         } else {
-            if ($isSetSession == 'no') {
-                $userId = $user->getUserId();
-                return $userId;
-            } else {
-                return $user;
-            }
+            return $user;
         }
     }
 
