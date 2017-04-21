@@ -8,8 +8,8 @@ function __autoload($className)
 
 session_start();
 
-if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'], $_POST['email'], $_POST['password1'], $_POST['name'], $_POST['surname'], $_POST['password2'], $_POST['isAccepted'])) {
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['login'], $_POST['email'], $_POST['password1'], $_POST['name'], $_POST['surname'], $_POST['password2'], $_POST['isAccepted'])) {
         $isAccepted = $_POST['isAccepted'];
         if ($isAccepted == true) {
             try {
@@ -33,7 +33,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 'color' => 'info');
             echo json_encode($msg);
         }
-    } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['loginLogin'], $_POST['loginPassword'])) {
+    } else if (isset($_POST['loginLogin'], $_POST['loginPassword'])) {
         $login = $_POST['loginLogin'];
         $pass = $_POST['loginPassword'];
         try {
@@ -54,7 +54,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 'color' => 'danger');
             echo json_encode($msg);
         }
-    } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password2'], $_POST['password1'], $_POST['jsSession'])) {
+    } else if (isset($_POST['password2'], $_POST['password1'], $_POST['jsSession'])) {
         if ($_POST['jsSession'] === $_SESSION['token'] && isset($_SESSION['user'])) {
             $loadUser = unserialize($_SESSION['user']);
             try {
@@ -66,8 +66,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     'msg' => 'Hasło zostało zmienione',
                     'color' => 'success');
                 echo json_encode($msg);
-            }
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 $msg = array('type' => 'error',
                     'msg' => $e->getMessage(),
                     'color' => 'danger');
@@ -75,7 +74,51 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             }
         } else {
             $msg = array('type' => 'error',
-                'msg' => 'Problem z nawiązaniem połączenia z serwerem',
+                'msg' => 'Błąd sesji',
+                'color' => 'danger');
+            echo json_encode($msg);
+        }
+    } else if (isset($_POST['jsSession'], $_POST['email'], $_POST['name'], $_POST['surname'], $_POST['city'], $_POST['code'], $_POST['number'], $_POST['street'])) {
+        if ($_POST['jsSession'] === $_SESSION['token'] && isset($_SESSION['user'])) {
+            $loadUser = unserialize($_SESSION['user']);
+            try {
+                $controller = new UserController();
+                $repository = new UserRepository();
+                $controller->update($repository, $loadUser);
+                $_SESSION['user'] = serialize($loadUser);
+                unset($loadUser);
+                $msg = array('type' => 'success',
+                    'msg' => 'Edycja danych przebiegła pomyślnie',
+                    'color' => 'success');
+                echo json_encode($msg);
+            } catch (Exception $e) {
+                $msg = array('type' => 'error',
+                    'msg' => $e->getMessage(),
+                    'color' => 'danger');
+                echo json_encode($msg);
+            }
+        } else {
+            $msg = array('type' => 'error',
+                'msg' => 'Błąd sesji',
+                'color' => 'danger');
+            echo json_encode($msg);
+        }
+    } else if (isset($_POST['jsSession'])) {
+        if ($_POST['jsSession'] === $_SESSION['token'] && isset($_SESSION['user'])) {
+            $loadUser = unserialize($_SESSION['user']);
+            $dataPack = array('type' => 'success',
+                'email' => $loadUser->getUserEmail(),
+                'name' => $loadUser->getUserFirstName(),
+                'surname' => $loadUser->getUserLastName(),
+                'street' => $loadUser->getAddressStreet(),
+                'number' => $loadUser->getAddressNumber(),
+                'city' => $loadUser->getAddressCity(),
+                'codeC' => $loadUser->getAddressCode());
+            unset($loadUser);
+            echo json_encode($dataPack);
+        } else {
+            $msg = array('type' => 'error',
+                'msg' => 'Błąd sesji',
                 'color' => 'danger');
             echo json_encode($msg);
         }

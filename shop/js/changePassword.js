@@ -52,7 +52,6 @@ $(document).ready(function () {
             });
 
             requestPass.done(function (response) {
-                console.log(response);
                 if (response.type === 'error') {
                     createAlert(response.msg, response.color);
                 } else {
