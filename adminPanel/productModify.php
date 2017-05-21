@@ -24,7 +24,7 @@ require "templates/adminHeader.php";
                 $name = $product->getProductName();
                 $price = $product->getProductPrice();
                 $description = $product->getProductDescription();
-                echo "<option value = '" . $id . "'>" . $name . " | " . $price . " | " . $description . "</option>";
+                echo "<option value = '" . $id . "'>" . $name . " cena: " . $price . " opis: " . $description . "</option>";
             }
         ?>
     </select>
@@ -52,21 +52,24 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && $_POST['action'] == "modifyProduct"
             $product->setProductName($_POST['newValue']);
             $newProduct = ProductRepository::save($connection, $product);
             if ($newProduct) {
-                header("location: modifyProduct.php");
+                echo "pomyślnie zmofdyfikowano produkt - strona odświeży się po 3 sekundach";
+                header("refresh: 3, url=#");
             }
         } elseif ($_POST['fieldToChange'] == "productPrice" && is_numeric($_POST['newValue'])) {
             $product = ProductRepository::loadProductById($connection, $_POST['productId']);
             $product->setProductPrice($_POST['newValue']);
             $newProduct = ProductRepository::save($connection, $product);
             if ($newProduct) {
-                header("location: modifyProduct.php");
+                echo "pomyślnie zmofdyfikowano produkt - strona odświeży się po 3 sekundach";
+                header("refresh: 3, url=#");
             }
         } elseif ($_POST['fieldToChange'] == "productDescription" && is_string($_POST['newValue'])) {
             $product = ProductRepository::loadProductById($connection, $_POST['productId']);
             $product->setProductDescription($_POST['newValue']);
             $newProduct = ProductRepository::save($connection, $product);
             if ($newProduct) {
-                header("location: modifyProduct.php");
+                echo "pomyślnie zmofdyfikowano produkt - strona odświeży się po 3 sekundach";
+                header("refresh: 3, url=#");
             }
         }
         else {
