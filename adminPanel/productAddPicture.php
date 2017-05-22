@@ -51,7 +51,8 @@ require "templates/adminHeader.php";
                 if (!file_exists($path)) {
                     $result = move_uploaded_file($_FILES['imageFile']['tmp_name'], $path);
                 } else {
-                    die("zdjęcie o podanej nazwie pliku jest już zapisane");
+                    die("zdjęcie o podanej nazwie pliku jest już zapisane <br>
+                         <a href=\"adminPanel.php\">Przejdź do głównej strony panelu administratora</a>");
                 }
                 if ($result == true) {
                     $image = new Image();
@@ -63,8 +64,18 @@ require "templates/adminHeader.php";
                     }
                 }
             } else {
-                die ('nie załączono zdjęcia dla produktu');
+                die ('nie załączono zdjęcia dla produktu <br>
+                      <a href="adminPanel.php">Przejdź do głównej strony panelu administratora</a>');
             }
         }
+
+    ?>
+
+    <div>
+        <a href="adminPanel.php">Przejdź do głównej strony panelu administratora</a>
+    </div>
+
+</body>
+</html>
 
 

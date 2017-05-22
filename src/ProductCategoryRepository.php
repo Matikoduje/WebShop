@@ -13,7 +13,6 @@ class ProductCategoryRepository
             $stmt = $connection->prepare($sql);
             $stmt->bindParam(":name", $name);
             $stmt->execute();
-
             $categoryId = $connection->lastInsertId();
             $category = new ProductCategory();
             $category->setProductCategoryId($categoryId);
@@ -26,6 +25,7 @@ class ProductCategoryRepository
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(":name", $name);
             $stmt->execute();
+            return ProductCategoryRepository::loadProductCategoryById($connection, $id);
         }
     }
 
