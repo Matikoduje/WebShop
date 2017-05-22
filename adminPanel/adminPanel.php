@@ -21,7 +21,7 @@ require "templates/adminHeader.php";
             <li><a href="productModify.php">Zmodyfikuj istniejący produkt</a></li>
             <li><a href="productChangeQuantity.php">Zmień ilość produktu</a></li>
             <li><a href="productChangeCategory.php">Zmień kategorię produktu</a></li>
-
+            <li><a href="productAddPicture.php">Dodaj zdjęcie produktu do bazy</a></li>
         </ul>
 
     <div>Zarządzaj kategoriami produktu</div>
