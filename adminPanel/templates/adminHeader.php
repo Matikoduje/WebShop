@@ -14,12 +14,14 @@ session_start();
 
 if (isset($_SESSION['adminId'])) {
     echo "Zalogowany Admin: " . AdminRepository::loadAdminById($connection, $_SESSION['adminId'])->getAdminLogin();
-    echo "<br><a href='logout.php'>wyloguj</a>";
+    echo "<br>";
+    echo "<a href='logout.php'>wyloguj się</a>";
+    echo " lub przejdź do ";
+    echo "<a href='adminPanel.php'>panelu administratora</a>";
     echo "<hr>";
 } else {
     echo "nikt nie jest zalogowany";
     echo "<hr>";
-    //die ("<br>". "<a href='adminLoginForm.php'>Przejdź do strony logowania administratora</a>");
 }
 
 ?>

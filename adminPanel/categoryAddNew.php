@@ -36,9 +36,5 @@ require "templates/adminHeader.php";
 
     ?>
 
-    <div>
-        <a href="adminPanel.php">Przejdź do głównej strony panelu administratora</a>
-    </div>
-
 </body>
 </html>

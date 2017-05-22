@@ -80,10 +80,5 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && $_POST['action'] == "modifyProduct"
 
 ?>
 
-
-<div>
-    <a href="adminPanel.php">Przejdź do głównej strony panelu administratora</a>
-</div>
-
 </body>
 </html>

@@ -70,10 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 ?>
 
-<div>
-    <a href="adminPanel.php">Przejdź do głównej strony panelu administratora</a>
-</div>
-
 </body>
 </html>
 
