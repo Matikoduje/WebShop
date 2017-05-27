@@ -42,7 +42,7 @@ require "templates/adminHeader.php";
 
     <div>Zarządzaj wiadomościami</div>
         <ul>
-
+            <li><a href="messageCreate.php">Napisz wiadomość do użytkownika</a></li>
         </ul>
 
 </body>
