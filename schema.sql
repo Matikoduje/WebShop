@@ -29,6 +29,7 @@ CREATE TABLE `messages` (
   FOREIGN KEY (`adminId`) REFERENCES `admins`(`adminId`),
   FOREIGN KEY (`userId`) REFERENCES `users`(`userId`)
 );
+ALTER TABLE `messages`  ADD `isMessageSent` TINYINT(1) NOT NULL DEFAULT '0'  AFTER `messageText`,  ADD `isMessageRead` TINYINT(1) NOT NULL DEFAULT '0'  AFTER `isMessageSent`;
 
 CREATE TABLE `products_category` (
   `productCategoryId` INT NOT NULL AUTO_INCREMENT,
