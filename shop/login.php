@@ -1,6 +1,5 @@
 <?php
 require 'templates/header.php';
-
 ?>
     <script src="js/validateUserForms.js?a=2"></script>
     <div class="row" id="forAlert">

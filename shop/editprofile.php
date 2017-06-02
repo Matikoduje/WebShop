@@ -1,21 +1,6 @@
 <?php
 require 'templates/header.php';
 
-//$loadUser = unserialize($_SESSION['user']);
-
-//if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'], $_POST['name'], $_POST['surname'])) {
-//    try {
-//        $controller = new UserController();
-//        $repository = new UserRepository();
-//        $controller->update($repository, $loadUser);
-//        $_SESSION['user'] = serialize($loadUser);
-//        $msg = new Alert("Edycja danych przebiegła pomyślnie","success");
-//    } catch (Exception $e) {
-//        $msg = new Alert($e->getMessage(),'danger');
-//    }
-//} else if (!isset($_POST['email'], $_POST['name'], $_POST['surname']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
-//    $msg = new Alert("Edycja danych przebiegła pomyślnie","success");
-//}
 ?>
 
     <script src="js/editProfile.js?a=2"></script>

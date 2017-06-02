@@ -9,6 +9,9 @@ class Message
     private $messageText;
     private $isMessageSent;
     private $isMessageRead;
+    private $messageTitle;
+    private $messageDate;
+
 
     public function __construct()
     {

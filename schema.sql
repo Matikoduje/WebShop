@@ -25,6 +25,10 @@ CREATE TABLE `messages` (
   `adminId` INT NOT NULL,
   `userId` INT NOT NULL,
   `messageText` VARCHAR(255) NOT NULL,
+  `messageTitle` VARCHAR(255) NOT NULL,
+  `messageDate` DATETIME NOT NULL,
+  `messageSent` DATETIME NOT NULL,
+  `isMessageRead` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`messageId`),
   FOREIGN KEY (`adminId`) REFERENCES `admins`(`adminId`),
   FOREIGN KEY (`userId`) REFERENCES `users`(`userId`)
