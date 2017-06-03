@@ -1,6 +1,7 @@
 <?php
 require 'templates/header.php';
 ?>
+    <script src="js/messages.js?a=211"></script>
     <div class="col-sm-12">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default panel-table">
@@ -10,25 +11,16 @@ require 'templates/header.php';
                     </div>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-striped table-bordered table-list" style="text-align: center">
+                    <table id="messages" class="table table-striped table-bordered table-list" style="text-align: center">
                         <thead>
                         <tr>
-                            <th style="text-align: center">Usuń</th>
-                            <th class="hidden-xs hidden">ID</th>
-                            <th style="text-align: center">Autor</th>
                             <th style="text-align: center">Temat</th>
+                            <th style="text-align: center">Treść</th>
                             <th style="text-align: center">Data</th>
+                            <th class="hidden-xs hidden">ID</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td align="center">
-                                <a class="btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
-                            </td>
-                            <td class="hidden-xs hidden">1</td>
-                            <td>John Doe</td>
-                            <td>johndoe@example.com</td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>

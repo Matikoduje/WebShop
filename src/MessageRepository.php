@@ -76,6 +76,7 @@ class MessageRepository
             $message->setMessageText($item['messageText']);
             $message->setIsMessageSent($item['isMessageSent']);
             $message->setIsMessageRead($item['isMessageRead']);
+            $message->setMessageTitle($item['messageTitle']);
             $messages[] = $message;
         }
         return $messages;

@@ -9,8 +9,19 @@ function readCookie(name) {
     return false;
 }
 
+function createCookie(name,value,days) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+    } else {
+        var expires = "";
+    }
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+
 function eraseCookie(name) {
-    createCookie(name, "", -1);
+    createCookie(name,"",-1);
 }
 
 function createAlert(message, alertType) {
@@ -21,11 +32,14 @@ $(document).ready(function () {
 
     function menuLogged() {
         var menu = $('#menuList');
+        var basket = $('#basket');
         var caret = $('#colorCaret');
         var color = $('#colorMenu');
         caret.removeClass();
         color.removeClass();
         menu.empty();
+        basket.empty();
+        basket.append('<a href="basket.php"><span class="text-primary">Mój koszyk</span></a>');
         menu.append('<li class="navbar-inverse"><a href="editprofile.php"><span class="text-primary">Moje dane</span></a></li>');
         menu.append('<li class="navbar-inverse"><a href="#"><span class="text-primary">Moje zakupy</span></a></li>');
         menu.append('<li class="navbar-inverse"><a href="message.php"><span class="text-primary">Wiadomości</span></a></li>');
@@ -38,6 +52,7 @@ $(document).ready(function () {
 
     function menuNotLogged() {
         var menu = $('#menuList');
+        var basket = $('#basket');
         var caret = $('#colorCaret');
         var color = $('#colorMenu');
         caret.removeClass();
@@ -45,11 +60,12 @@ $(document).ready(function () {
         caret.addClass('caret text-warning');
         color.addClass('text-warning');
         menu.empty();
+        basket.empty();
         menu.append('<li class="navbar-inverse"><a href="login.php"><span class="text-warning">Zaloguj/Zarejestruj</span></a></li>');
     }
 
     var request;
-    if (readCookie('token') !== false) {
+    if (typeof readCookie('token') !== false) {
         var token = readCookie('token');
         request = $.ajax({
             url: "api/checkSession.php",

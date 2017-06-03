@@ -151,7 +151,7 @@ $(document).ready(function () {
                 if (data.type === 'error') {
                     createAlert(data.msg, data.color);
                 } else {
-                    document.cookie = "token=" + data.token;
+                    createCookie('token', data.token, 1);
                     if (typeof readCookie('token') !== false ) {
                         createAlert(data.msg, data.color);
                         window.setTimeout(function(){

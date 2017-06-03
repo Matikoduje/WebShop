@@ -37,12 +37,17 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         $login = $_POST['loginLogin'];
         $pass = $_POST['loginPassword'];
         try {
+            $conn = new Connection();
+            $conn = $conn->doConnect();
             $controller = new UserController();
             $repository = new UserRepository();
             $loadUser = $controller->load($repository, $login, $pass);
+            $basket = new BasketProducts($conn);
             $_SESSION['user'] = serialize($loadUser);
             $_SESSION['token'] = uniqid('user');
+            $_SESSION['basket'] = serialize($basket);
             unset($controller, $repository, $loadUser);
+            $conn = null;
             $dataPack = array('token' => $_SESSION['token'],
                 'type' => 'success',
                 'msg' => 'Zalogowałeś się. Życzymy przyjemnych zakupów',

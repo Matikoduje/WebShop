@@ -27,8 +27,6 @@ CREATE TABLE `messages` (
   `messageText` VARCHAR(255) NOT NULL,
   `messageTitle` VARCHAR(255) NOT NULL,
   `messageDate` DATETIME NOT NULL,
-  `isMessageRead` TINYINT(1) DEFAULT 0,
-  `isMessageSent` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`messageId`),
   FOREIGN KEY (`adminId`) REFERENCES `admins`(`adminId`),
   FOREIGN KEY (`userId`) REFERENCES `users`(`userId`)
@@ -37,14 +35,14 @@ ALTER TABLE `messages`  ADD `isMessageSent` TINYINT(1) NOT NULL DEFAULT '0'  AFT
 
 CREATE TABLE `products_category` (
   `productCategoryId` INT NOT NULL AUTO_INCREMENT,
-  `productCategoryName` VARCHAR(60) NOT NULL,
+  `productCategoryName` VARCHAR(60) UNIQUE NOT NULL,
   PRIMARY KEY (`productCategoryId`)
 );
 
 CREATE TABLE `products` (
   `productId` INT NOT NULL AUTO_INCREMENT,
   `productName` VARCHAR(60) NOT NULL,
-  `productPrice` DECIMAL(11,4) NOT NULL,
+  `productPrice` DECIMAL(11,2) NOT NULL,
   `productDescription` VARCHAR(255) NOT NULL,
   `productCategory` INT NOT NULL,
   `productQuantity` INT,
@@ -80,16 +78,22 @@ CREATE TABLE `orders` (
   `orderDate` DATETIME NOT NULL,
   `isOrderEdited` TINYINT(1) DEFAULT 1,
   `isOrderConfirmed` TINYINT(1) DEFAULT 0,
-  `isInvoiceIssued` TINYINT(1) DEFAULT 0,
-  `isInvoicePaid` TINYINT(1) DEFAULT 0,
-  `invoiceNumber` INT NOT NULL,
-  `invoiceDate` DATETIME,
+  `orderValue` DECIMAL(11,4),
   PRIMARY KEY (`orderId`),
   FOREIGN KEY (`userId`) REFERENCES `users`(`userId`),
   FOREIGN KEY (`orderStatusId`) REFERENCES `orders_status`(`orderStatusId`),
   FOREIGN KEY (`paymentMethodId`) REFERENCES `payment_method` (`paymentMethodId`)
 );
 
+CREATE TABLE `invoices` (
+  `invoiceId` INT NOT NULL AUTO_INCREMENT,
+  `isInvoiceIssued` TINYINT(1) DEFAULT 0,
+  `isInvoicePaid` TINYINT(1) DEFAULT 0,
+  `invoiceDate` DATETIME,
+  `orderId` INT NOT NULL,
+  PRIMARY KEY (`invoiceId`),
+  FOREIGN KEY (`orderId`) REFERENCES `orders`(`orderId`)
+);
 
 CREATE TABLE `order_products` (
   `orderProductId` INT NOT NULL AUTO_INCREMENT,

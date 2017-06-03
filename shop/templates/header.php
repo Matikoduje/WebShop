@@ -12,7 +12,7 @@
     <link href="css/shop-homepage.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="js/main.js?a=1"></script>
+    <script src="js/main.js?a=111"></script>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -36,6 +36,9 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li id="basket">
+
+                </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false"><span
                                 id="colorMenu">Moje konto</span><span

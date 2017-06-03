@@ -62,6 +62,18 @@ class ProductRepository
         return $product;
     }
 
+    static public function getProductInfo(PDO $connection, $productId, $info)
+    {
+        $sql = "SELECT " . $info . " FROM products WHERE productId = :id";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindParam(":id", $productId);
+        $stmt->execute();
+        while ($item = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $info = $item[''. $info .''];
+        }
+        return $info;
+    }
+
     static public function loadAllProducts(PDO $connection)
     {
         $sql = "SELECT * FROM products";
@@ -125,6 +137,25 @@ class ProductRepository
         } else {
             return false;
         };
+    }
+
+    static public function loadLastThreeProducts(PDO $connection)
+    {
+        $sql = 'SELECT * FROM (SELECT * FROM products ORDER BY productId DESC LIMIT 3) as p ORDER BY productId';
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        $productsArray = [];
+        while ($item = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $product = new Product();
+            $product->setProductId($item['productId']);
+            $product->setProductName($item['productName']);
+            $product->setProductPrice($item['productPrice']);
+            $product->setProductDescription($item['productDescription']);
+            $product->setProductCategory($item['productCategory']);
+            $product->setProductQuantity($item['productQuantity']);
+            $productsArray[] = $product;
+        }
+        return $productsArray;
     }
 
 }
