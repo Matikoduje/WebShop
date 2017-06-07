@@ -15,3 +15,7 @@ try {
 //    var_dump(password_verify("adminPZ1", $item['adminPassword']));
 //}
 
+//$hashedPassword = password_hash("admin", PASSWORD_DEFAULT);
+//$stmt = $connection->query(
+//    "INSERT INTO admins (adminEmail, adminLogin, adminPassword)
+//              VALUES ('admin@wp.pl', 'admin', '$hashedPassword')");

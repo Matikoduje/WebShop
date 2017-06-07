@@ -1,7 +1,5 @@
+<p>zmiana statusu zamówienia</p>
+<p>usunięcie zamówienia</p>
+
 <?php
-/**
- * Created by PhpStorm.
- * User: przemek
- * Date: 07.06.17
- * Time: 12:48
- */
+

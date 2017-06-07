@@ -12,8 +12,8 @@ class MessageRepository
         $isMessageRead = $message->getIsMessageRead();
 
         if ($messageId == -1) {
-            $sql = "INSERT INTO messages(adminId, userId, messageText, isMessageSent, isMessageRead)
-                    VALUES (:adminID, :userId, :messageText, :isMessageSent, :isMessageRead)";
+            $sql = "INSERT INTO `messages` (`adminId`, `userId`, `messageText`, `isMessageSent`, `isMessageRead`)
+                    VALUES (:adminId, :userId, :messageText, :isMessageSent, :isMessageRead)";
             $stmt = $connection->prepare($sql);
             $stmt->bindParam(":adminId", $adminId);
             $stmt->bindParam(":userId", $userId);
@@ -21,11 +21,12 @@ class MessageRepository
             $stmt->bindParam(":isMessageSent", $isMessageSent);
             $stmt->bindParam(":isMessageRead", $isMessageRead);
             $stmt->execute();
+
             $messageId = $connection->lastInsertId();
-            $savedMessage = MessageRepository::loadMessageById($connection, $messageId);
-            return $savedMessage;
+            $newMessage = MessageRepository::loadMessageById($connection, $messageId);
+            return $newMessage;
         } elseif ($messageId > 0) {
-            $sql = "UPDATE messagess SET adminId = :adminId,
+            $sql = "UPDATE messages SET adminId = :adminId,
                                          userId = :userId,
                                          messageText = :messageText,
                                          isMessageSent = :isMessageSent,
@@ -43,7 +44,7 @@ class MessageRepository
         }
     }
 
-    static public function loadMessageById(PDO $connection, Message $messageId)
+    static public function loadMessageById(PDO $connection, $messageId)
     {
         $sql = "SELECT * FROM messages WHERE messageId = :messageId";
         $stmt = $connection->prepare($sql);
@@ -104,6 +105,5 @@ class MessageRepository
             return false;
         }
     }
-
 
 }

@@ -23,8 +23,8 @@ require "templates/adminHeader.php";
         $categoriesArray = ProductCategoryRepository::loadAllProductCategories($connection);
         foreach ($categoriesArray as $category) {
             $productCategoryId = $category->getProductCategoryId();
-            $prodcutCategoryName = $category->getProductCategoryName();
-            echo "<option value = '" . $productCategoryId . "'>" . $prodcutCategoryName . "</option>";
+            $productCategoryName = $category->getProductCategoryName();
+            echo "<option value = '" . $productCategoryId . "'>" . $productCategoryName . "</option>";
         }
         ?>
         </select>

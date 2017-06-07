@@ -130,4 +130,47 @@ class UserRepository implements RepositoryInterface
         // TODO: Implement remove() method.
     }
 
+    static public function loadAllUsers(PDO $connection) //++
+    {
+        $sql = "SELECT * FROM users";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        $usersArray = [];
+        while ($item = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $user = new User();
+            $user->setUserId($item['userId']);
+            $user->setUserFirstName($item['userFirstName']);
+            $user->setUserLastName($item['userLastName']);
+            $user->setUserLogin($item['userLogin']);
+            $user->setUserEmail($item['userEmail']);
+            $user->setAddressCity($item['addressCity']);
+            $user->setAddressCode($item['addressCode']);
+            $user->setAddressStreet($item['addressStreet']);
+            $user->setAddressNumber($item['addressNumber']);
+            $usersArray[] = $user;
+        }
+        return $usersArray;
+    }
+
+    static public function loadUserById(PDO $connection, $userId)
+    {
+        $sql = "SELECT * FROM users WHERE userId = :userId";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindParam(":userId", $userId);
+        $stmt->execute();
+        while ($item = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $user = new User();
+            $user->setUserId($item['userId']);
+            $user->setUserFirstName($item['userFirstName']);
+            $user->setUserLastName($item['userLastName']);
+            $user->setUserLogin($item['userLogin']);
+            $user->setUserEmail($item['userEmail']);
+            $user->setAddressCity($item['addressCity']);
+            $user->setAddressCode($item['addressCode']);
+            $user->setAddressStreet($item['addressStreet']);
+            $user->setAddressNumber($item['addressNumber']);
+        }
+        return $user;
+    }
+
 }

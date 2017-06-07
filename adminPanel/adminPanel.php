@@ -32,12 +32,12 @@ require "templates/adminHeader.php";
 
     <div>Zarządzaj klientami</div>
         <ul>
-
+            <li><a href="userList.php">Wyświetl listę klientów</a></li>
         </ul>
 
     <div>Zarządzaj zamówieniami</div>
         <ul>
-
+            <li><a href="orderList.php">Wyświetl listę wszystkich zamówień</a></li>
         </ul>
 
     <div>Zarządzaj wiadomościami</div>

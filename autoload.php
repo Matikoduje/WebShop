@@ -1,7 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: przemek
- * Date: 07.06.17
- * Time: 10:41
- */
+
+function __autoload($class)
+{
+    include_once 'src/' . $class . '.php';
+}
