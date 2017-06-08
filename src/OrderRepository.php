@@ -2,50 +2,111 @@
 
 class OrderRepository
 {
-    protected $conn;
-    protected $preparedStatement;
+
+    static public function prepareConnection()
+    {
+        $conn = new Connection();
+        $conn = $conn->doConnect();
+        return $conn;
+    }
 
     public function save(Order $order)
     {
-        $this->conn = new Connection();
-        $this->conn = $this->conn->doConnect();
+        $conn = $this->prepareConnection();
 
         if ($order->getId() == -1) {
             try {
-                $this->preparedStatement = $this->conn->prepare("INSERT INTO `orders` (`orderDate`,
+                $preparedStatement = $conn->prepare("INSERT INTO `orders` (`orderDate`,
                 `orderValue`, `userId`) VALUES (:orderDate, :orderValue, :userId)");
-                $this->preparedStatement->bindValue(':orderDate', $order->getOrderDate());
-                $this->preparedStatement->bindValue(':orderValue', $order->getOrderValue());
-                $this->preparedStatement->bindValue(':userId', $order->getUserId());
-                $this->preparedStatement->execute();
+                $preparedStatement->bindValue(':orderDate', $order->getOrderDate());
+                $preparedStatement->bindValue(':orderValue', $order->getOrderValue());
+                $preparedStatement->bindValue(':userId', $order->getUserId());
+                $preparedStatement->execute();
+                return $conn->lastInsertId();
             } catch (PDOException $e) {
-                $this->conn = null;
+                $conn = null;
                 throw new Exception("Przepraszamy chwilowo mamy problemy z serwerem bazy danych. Proszę spróbować zarejestrować się za chwilę");
             }
-        } //else {
-//            try {
-//                $this->preparedStatement = $this->conn->prepare("UPDATE `users` SET `userFirstName`=:userFirstName,
-//                `userLastName`=:userLastName, `userLogin`=:userLogin, `userPassword`=:userPassword,
-//                `userEmail`=:userEmail, `addressCity`=:addressCity, `addressCode`=:addressCode,
-//                `addressStreet`=:addressStreet, `addressNumber`=:addressNumber WHERE userId=:userId");
-//
-//                $this->preparedStatement->bindValue(':userId', $user->getUserId());
-//                $this->preparedStatement->bindValue(':userFirstName', $user->getUserFirstName());
-//                $this->preparedStatement->bindValue(':userLastName', $user->getUserLastName());
-//                $this->preparedStatement->bindValue(':userLogin', $user->getUserLogin());
-//                $this->preparedStatement->bindValue(':userPassword', $user->getUserPassword());
-//                $this->preparedStatement->bindValue(':addressCity', $user->getAddressCity());
-//                $this->preparedStatement->bindValue(':addressCode', $user->getAddressCode());
-//                $this->preparedStatement->bindValue(':addressNumber', $user->getAddressNumber());
-//                $this->preparedStatement->bindValue(':addressStreet', $user->getAddressStreet());
-//                $this->preparedStatement->bindValue(':userEmail', $user->getUserEmail());
-//
-//                $this->preparedStatement->execute();
-//            } catch (PDOException $e) {
-//                $this->conn = null;
-//                throw new Exception("Przepraszamy chwilowo mamy problemy z serwerem bazy danych. Nie można zapisać danych");
-//            }
-//        }
-        $this->conn = null;
+        }
+        $conn = null;
+    }
+
+    static public function loadOrderById($id, $userId)
+    {
+        $conn = self::prepareConnection();
+
+        try {
+            $preparedStatement = $conn->prepare("SELECT * FROM `orders` WHERE orderId=:id");
+            $preparedStatement->bindParam(':id', $id);
+            $preparedStatement->execute();
+            if ($preparedStatement->rowCount()) {
+                $row = $preparedStatement->fetch();
+                if ($userId != $row['userId']) {
+                    throw new Exception('Użytkownik nie ma uprawnień do zobaczenia zamówienia');
+                }
+
+                $order = new Order($row['userId'], $row['orderDate'], $row['orderValue'], $row['orderId']);
+                $order->setIsOrderConfirmed($row['isOrderConfirmed']);
+                $order->setIsOrderEdited($row['isOrderEdited']);
+                $order->setPaymenthMethodId($row['paymentMethodId']);
+                $order->setOrderStatusId($row['orderStatusId']);
+                $conn = null;
+                return $order;
+            } else {
+                $conn = null;
+                throw new Exception('Nie ma zamówienia o podanym id');
+            }
+        } catch (PDOException $e) {
+            $conn = null;
+            throw new Exception('Nie można wczytać danych z tabeli');
+        }
+    }
+
+    public function updateValue($orderId, $orderValue)
+    {
+        $conn = $this->prepareConnection();
+
+        try {
+            $preparedStatement = $conn->prepare("UPDATE `orders` SET `orderValue`=:orderValue WHERE orderId=:orderId");
+            $preparedStatement->bindParam(':orderId', $orderId);
+            $preparedStatement->bindParam(':orderValue', $orderValue);
+            $preparedStatement->execute();
+            $conn = null;
+        } catch (PDOException $e) {
+            $conn = null;
+            throw new Exception('Nie można zapisać danych do tabeli');
+        }
+    }
+
+    public function setPayment($orderId, $paymentId)
+    {
+        $conn = $this->prepareConnection();
+
+        try {
+            $preparedStatement = $conn->prepare("UPDATE `orders` SET `paymentMethodId`=:paymentId WHERE orderId=:orderId");
+            $preparedStatement->bindParam(':orderId', $orderId);
+            $preparedStatement->bindParam(':paymentId', $paymentId);
+            $preparedStatement->execute();
+            $conn = null;
+        } catch (PDOException $e) {
+            $conn = null;
+            throw new Exception('Nie można zapisać danych do tabeli');
+        }
+    }
+
+    public function setOrderStatus($orderId, $statusId)
+    {
+        $conn = $this->prepareConnection();
+
+        try {
+            $preparedStatement = $conn->prepare("UPDATE `orders` SET `orderStatusId`=:statusId WHERE orderId=:orderId");
+            $preparedStatement->bindParam(':orderId', $orderId);
+            $preparedStatement->bindParam(':statusId', $statusId);
+            $preparedStatement->execute();
+            $conn = null;
+        } catch (PDOException $e) {
+            $conn = null;
+            throw new Exception('Nie można zapisać danych do tabeli');
+        }
     }
 }
