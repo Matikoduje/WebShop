@@ -1,9 +1,5 @@
-<p>zobacz zamówienia klientów</p>
-<p>usuń klienta</p>
-
-
 <?php
-require "templates/adminHeader.php";
+    require "templates/adminHeader.php";
 ?>
 
 <html>

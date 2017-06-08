@@ -109,4 +109,119 @@ class OrderRepository
             throw new Exception('Nie można zapisać danych do tabeli');
         }
     }
+
+    static public function loadAllOrders(PDO $connection)
+    {
+        $sql = "SELECT * FROM orders";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        $ordersArray = [];
+        while ($item = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $order = new Order($item['userId']);
+            $order->setOrderId($item['orderId']);
+            $order->setUserId($item['userId']);
+            $order->setOrderStatusId($item['orderStatusId']);
+            $order->setPaymenthMethodId($item['paymentMethodId']);
+            $order->setOrderDate($item['orderDate']);
+            $order->setIsOrderEdited($item['isOrderEdited']);
+            $order->setIsOrderConfirmed($item['isOrderConfirmed']);
+            $order->setIsInvoiceIssued($item['isInvoiceIssued']);
+            $order->setIsInvoicePaid($item['isInvoicePaid']);
+            $order->setInvoiceNumber($item['invoiceNumber']);
+            $order->setInvoiceDate($item['invoiceDate']);
+            $ordersArray[] = $order;
+        }
+        return $ordersArray;
+
+    }
+
+    static public function loadAllOrdersByUserId (PDO $connection, $userId)
+    {
+        $sql = "SELECT * FROM orders WHERE userId = :userId";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindParam(":userId", $userId);
+        $stmt->execute();
+        $ordersArray = [];
+        while ($item = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $order = new Order($userId);
+            $order->setOrderId($item['orderId']);
+            $order->setUserId($item['userId']);
+            $order->setOrderStatusId($item['orderStatusId']);
+            $order->setPaymenthMethodId($item['paymentMethodId']);
+            $order->setOrderDate($item['orderDate']);
+            $order->setIsOrderEdited($item['isOrderEdited']);
+            $order->setIsOrderConfirmed($item['isOrderConfirmed']);
+            $order->setIsInvoiceIssued($item['isInvoiceIssued']);
+            $order->setIsInvoicePaid($item['isInvoicePaid']);
+            $order->setInvoiceNumber($item['invoiceNumber']);
+            $order->setInvoiceDate($item['invoiceDate']);
+            $ordersArray[] = $order;
+        }
+        return $ordersArray;
+
+    }
+
+    static public function loadOrderByOrderId (PDO $connection, $orderId)
+    {
+        $sql = "SELECT * FROM orders WHERE orderId = :orderId";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindParam(":orderId", $orderId);
+        $stmt->execute();
+        while ($item = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $order = new Order($item['userId']);
+            $order->setOrderId($item['orderId']);
+            $order->setUserId($item['userId']);
+            $order->setOrderStatusId($item['orderStatusId']);
+            $order->setPaymenthMethodId($item['paymentMethodId']);
+            $order->setOrderDate($item['orderDate']);
+            $order->setIsOrderEdited($item['isOrderEdited']);
+            $order->setIsOrderConfirmed($item['isOrderConfirmed']);
+            $order->setIsInvoiceIssued($item['isInvoiceIssued']);
+            $order->setIsInvoicePaid($item['isInvoicePaid']);
+            $order->setInvoiceNumber($item['invoiceNumber']);
+            $order->setInvoiceDate($item['invoiceDate']);
+        }
+        return $order;
+    }
+
+    static public function updateOrder(PDO $connection, Order $order)
+    {
+        $userId = $order->getUserId();
+        $orderStatusId = $order->getOrderStatusId();
+        $paymentMethodId = $order->getPaymenthMethodId();
+        $orderDate = $order->getOrderDate();
+        $isOrderEdited = $order->getIsOrderEdited();
+        $isOrderConfirmed = $order->getIsOrderConfirmed();
+        $isInvoiceIssued = $order->getIsInvoiceIssued();
+        $isInvoicePaid = $order->getIsInvoicePaid();
+        $invoiceNumber = $order->getInvoiceNumber();
+        $invoiceDate = $order->getInvoiceDate();
+        $orderId = $order->getId();
+        $sql = "UPDATE orders SET userId = :userId,
+                                  orderStatusId = :orderStatusId,
+                                  paymentMethodId = :paymentMethodId,
+                                  orderDate = :orderDate,
+                                  isOrderEdited = :isOrderEdited,
+                                  isOrderConfirmed = :isOrderConfirmed,
+                                  isInvoiceIssued = :isInvoiceIssued,
+                                  isInvoicePaid = :isInvoicePaid,
+                                  invoiceNumber = :invoiceNumber,
+                                  invoiceDate = :invoiceDate
+                    WHERE orderId = :orderId";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindParam(":userId", $userId);
+        $stmt->bindParam(":orderStatusId", $orderStatusId);
+        $stmt->bindParam(":paymentMethodId", $paymentMethodId);
+        $stmt->bindParam(":orderDate", $orderDate);
+        $stmt->bindParam(":isOrderEdited", $isOrderEdited);
+        $stmt->bindParam(":isOrderConfirmed", $isOrderConfirmed);
+        $stmt->bindParam(":isInvoiceIssued", $isInvoiceIssued);
+        $stmt->bindParam(":isInvoicePaid", $isInvoicePaid);
+        $stmt->bindParam(":invoiceNumber", $invoiceNumber);
+        $stmt->bindParam(":invoiceDate", $invoiceDate);
+        $stmt->bindParam(":orderId", $orderId);
+        $stmt->execute();
+        $order = OrderRepository::loadOrderByOrderId($connection, $order->getId());
+        return $order;
+    }
 }

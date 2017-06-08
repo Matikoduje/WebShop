@@ -152,7 +152,7 @@ class UserRepository implements RepositoryInterface
         return $usersArray;
     }
 
-    static public function loadUserById(PDO $connection, $userId)
+    static public function loadUserById(PDO $connection, $userId) //++
     {
         $sql = "SELECT * FROM users WHERE userId = :userId";
         $stmt = $connection->prepare($sql);
