@@ -16,6 +16,6 @@ abstract class AbstractDatabaseTest extends \PHPUnit\DbUnit\TestCase
 
     protected function getDataSet()
     {
-        return $this->createMySQLXMLDataSet('file.xml');
+        return $this->createMySQLXMLDataSet('file_PZ.xml');
     }
 }

@@ -5,3 +5,4 @@ src/config.php
 src/Iconnect.php
 test.php
 _PZ/
+autoload.php

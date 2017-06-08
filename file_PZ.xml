@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database name="WebShop_DB">
+	<table_data name="admins">
+	</table_data>
+	<table_data name="images">
+	</table_data>
+	<table_data name="messages">
+	</table_data>
+	<table_data name="order_products">
+	</table_data>
+	<table_data name="orders">
+	</table_data>
+	<table_data name="orders_status">
+	</table_data>
+	<table_data name="payment_method">
+	</table_data>
+	<table_data name="products">
+	</table_data>
+	<table_data name="products_category">
+	</table_data>
+	<table_data name="users">
+	<row>
+		<field name="userId">1</field>
+		<field name="userFirstName">Jan</field>
+		<field name="userLastName">Nowak</field>
+		<field name="userLogin">JanNowak</field>
+		<field name="userPassword">$2y$10$80id0JOAeg/mi1rqpIeNBOS1BldsPccYxrLFytr3q5OIoYEtY4XTC</field>
+		<field name="userEmail">jan.nowak@onet.pl</field>
+		<field name="addressCity">Zabrze</field>
+		<field name="addressCode">33-222</field>
+		<field name="addressStreet">Gliwicka</field>
+		<field name="addressNumber">22</field>
+	</row>
+	<row>
+		<field name="userId">2</field>
+		<field name="userFirstName">Jan</field>
+		<field name="userLastName">Kowalski</field>
+		<field name="userLogin">admin</field>
+		<field name="userPassword">$2y$10$xpOqhI.9HNeLQVli4nJDNOTDoZfGHkYGadaCG3QRShMTkdWhUDFmO</field>
+		<field name="userEmail">admin@onet.pl</field>
+		<field name="addressCity" xsi:nil="true" />
+		<field name="addressCode" xsi:nil="true" />
+		<field name="addressStreet" xsi:nil="true" />
+		<field name="addressNumber" xsi:nil="true" />
+	</row>
+	</table_data>
+</database>
+</mysqldump>

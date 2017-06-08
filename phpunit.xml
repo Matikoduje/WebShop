@@ -16,6 +16,9 @@
             <directory>tests</directory>
             <file>UserTest.php</file>
         </testsuite>
+        <testsuite name="ProductRepository">
+            <directory>tests</directory>
+            <file>ProductRepositoryTest.php</file>
+        </testsuite>
     </testsuites>
 </phpunit>
-

@@ -1,14 +1,18 @@
 <?php
 
+include_once "../autoload.php";
 require_once "../src/_connection.php";
-require_once "../src/Admin.php";
-require_once "../src/AdminRepository.php";
-require_once "../src/ProductCategory.php";
-require_once "../src/ProductCategoryRepository.php";
-require_once "../src/Product.php";
-require_once "../src/ProductRepository.php";
-require_once "../src/Image.php";
-require_once "../src/ImageRepository.php";
+//require_once "../src/Admin.php";
+//require_once "../src/AdminRepository.php";
+//require_once "../src/ProductCategory.php";
+//require_once "../src/ProductCategoryRepository.php";
+//require_once "../src/Product.php";
+//require_once "../src/ProductRepository.php";
+//require_once "../src/Image.php";
+//require_once "../src/ImageRepository.php";
+//require_once "../src/User.php";
+//require_once "../src/UserRepository.php";
+//require_once "../src/ObjectInterface.php";
 
 session_start();
 
