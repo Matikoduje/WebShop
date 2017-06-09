@@ -30,4 +30,23 @@ class OrderProductsRepository
             }
         }
     }
+
+    static public function loadOrderProductsByOrderId(PDO $connection, $orderId)
+    {
+        $sql = "SELECT * FROM order_products WHERE orderId = :orderId";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindParam(':orderId', $orderId);
+        $stmt->execute();
+        $orderProductsArray =[];
+        while ($item = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $orderProducts = new OrderProducts($orderId);
+            $orderProducts->setId($item['orderProductId']);
+            $orderProducts->setQuantity($item['orderProductQuantity']);
+            $orderProducts->setPrice($item['orderProductPrice']);
+            $orderProducts->setValue($item['orderProductValue']);
+            $orderProducts->setProductId($item['productId']);
+            $orderProductsArray[] = $orderProducts;
+        }
+        return $orderProductsArray;
+    }
 }

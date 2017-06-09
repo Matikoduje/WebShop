@@ -7,10 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         $user = UserRepository::loadUserById($connection, $_GET['userId']);
     }
 }
-
-//TODO: klasa ORDER
 ?>
-
 
 
 <html>
@@ -23,15 +20,45 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
 <h3>Panel Administratora / Karta klienta</h3>
 
-<p>id: <?php echo $user->getUserId(); ?></p>
-<p>imię: <?php echo $user->getUserFirstName(); ?></p>
-<p>nazwisko: <?php echo $user->getUserLastName(); ?></p>
-<p>email: <?php echo $user->getUserEmail(); ?></p>
-<p>miasto: <?php echo $user->getAddressCity(); ?></p>
-<p>kod pocztowy: <?php echo $user->getAddressCode(); ?></p>
-<p>adres: <?php echo $user->getAddressStreet() . " " . $user->getAddressNumber(); ?></p>
+<p>
+<?php
+echo "id: ". $user->getUserId() . "<br>";
+echo "imię: ". $user->getUserFirstName() . "<br>";
+echo "nazwisko: ". $user->getUserLastName() . "<br>";
+echo "email: ". $user->getUserEmail() . "<br>";
+echo "miasto: ". $user->getAddressCity() . "<br>";
+echo "kod pocztowy: ". $user->getAddressCode() . "<br>";
+echo "adres: ". $user->getAddressStreet() . " " . $user->getAddressNumber() . "<br>";
+?>
+</p>
 <hr>
 
+<p>Lista zamówień klienta:</p>
+
+
+<?php
+$ordersArray = OrderRepository::loadAllOrdersByUserId($connection, $user->getUserId());
+echo "<table>";
+    echo "<tr>";
+        echo "<td>Id zamówienia</td>";
+        echo "<td>Data zamówienia</td>";
+        echo "<td>Nr faktury</td>";
+        echo "<td>Data faktury</td>";
+    echo "</tr>";
+    foreach ($ordersArray as $order) {
+        echo "<tr>";
+            echo "<td>" . $order->getId() . "</td>";
+            echo "<td>" . $order->getOrderDate() . "</td>";
+            echo "<td>" . $order->getInvoiceNumber() . "</td>";
+            echo "<td>" . $order->getInvoiceDate() . "</td>";
+            echo "<td><a href='orderDetails.php?orderId=" . $order->getId() . "'>szczegóły zamówienia</a></td>";
+        echo "</tr>";
+    }
+echo "</table>";
+
+
+
+?>
 
 
 

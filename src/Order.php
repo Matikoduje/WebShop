@@ -12,6 +12,10 @@ class Order
     private $orderStatusId;
     private $orderProducts;
     private $orderRepository;
+    private $isInvoiceIssued;
+    private $isInvoicePaid;
+    private $invoiceNumber;
+    private $invoiceDate;
 
     public function __construct($userId, $orderDate = null, $orderValue = null, $id = null)
     {
@@ -63,12 +67,22 @@ class Order
         $this->isOrderEdited = $isOrderEdited;
     }
 
+    public function getIsOrderEdited()
+    {
+        return $this->isOrderEdited;
+    }
+
     /**
      * @param mixed $isOrderConfirmed
      */
     public function setIsOrderConfirmed($isOrderConfirmed)
     {
         $this->isOrderConfirmed = $isOrderConfirmed;
+    }
+
+    public function getIsOrderConfirmed()
+    {
+        return $this->isOrderConfirmed;
     }
 
     /**
@@ -95,6 +109,10 @@ class Order
         $this->paymenthMethodId = $paymenthMethodId;
     }
 
+    public function getPaymenthMethodId()
+    {
+        return $this->paymenthMethodId;
+    }
 
     /**
      * @return mixed
@@ -166,5 +184,64 @@ class Order
 
         $this->orderRepository->setOrderStatus($this->id,$this->orderStatusId);
     }
+
+    public function setOrderId($orderId) //+
+    {
+        $this->id = $orderId;
+    }
+
+    public function setUserId($userId) //+
+    {
+        $this->userId = $userId;
+    }
+
+
+
+    public function setOrderDate($orderDate)
+    {
+        $this->orderDate = $orderDate;
+    }
+
+    public function getIsInvoiceIssued()
+    {
+        return $this->isInvoiceIssued;
+    }
+
+    public function setIsInvoiceIssued($isInvoiceIssued)
+    {
+        $this->isInvoiceIssued = $isInvoiceIssued;
+    }
+
+    public function getIsInvoicePaid()
+    {
+        return $this->isInvoicePaid;
+    }
+
+    public function setIsInvoicePaid($isInvoicePaid)
+    {
+        $this->isInvoicePaid = $isInvoicePaid;
+    }
+
+    public function getInvoiceNumber()
+    {
+        return $this->invoiceNumber;
+    }
+
+    public function setInvoiceNumber($invoiceNumber)
+    {
+        $this->invoiceNumber = $invoiceNumber;
+    }
+
+    public function getInvoiceDate()
+    {
+        return $this->invoiceDate;
+    }
+
+    public function setInvoiceDate($invoiceDate)
+    {
+        $this->invoiceDate = $invoiceDate;
+    }
+
+
 
 }
