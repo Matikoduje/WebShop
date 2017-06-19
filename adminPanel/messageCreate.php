@@ -45,7 +45,6 @@ require_once "templates/adminHeader.php";
                 $message->setUserId($userId);
                 $message->setMessageText($messageText);
                 $message->setIsMessageSent(1);
-                //$message->setIsMessageRead(0);
                 $newMessage = MessageRepository::save($connection, $message);
                 if ($newMessage) {
                     echo sprintf("Pomyślnie wysłano wiadomość do użytkownika id: %d  na email: %s",

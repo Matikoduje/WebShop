@@ -2,7 +2,7 @@
 
 class MessageRepository
 {
-    static public function save(PDO $connection, Message $message)
+    public static function save(PDO $connection, Message $message)
     {
         $messageId = $message->getMessageId();
         $adminId = $message->getAdminId();
@@ -44,7 +44,7 @@ class MessageRepository
         }
     }
 
-    static public function loadMessageById(PDO $connection, $messageId)
+    public static function loadMessageById(PDO $connection, $messageId)
     {
         $sql = "SELECT * FROM messages WHERE messageId = :messageId";
         $stmt = $connection->prepare($sql);
@@ -62,7 +62,7 @@ class MessageRepository
         return $message;
     }
 
-    static public function loadMessagesByUserId(PDO $connection, $userId)
+    public static function loadMessagesByUserId(PDO $connection, $userId)
     {
         $sql = "SELECT * FROM messages WHERE userId = :userId";
         $stmt = $connection->prepare($sql);
@@ -83,7 +83,7 @@ class MessageRepository
         return $messages;
     }
 
-    static public function setMessageAsSent($connection, $messageId)
+    public static function setMessageAsSent($connection, $messageId)
     {
         $message = MessageRepository::loadMessageById($connection, $messageId);
         $message->setIsMessageSent(1);
@@ -95,7 +95,7 @@ class MessageRepository
         }
     }
 
-    static public function setMessageAsRead($connection, $messageId)
+    public static function setMessageAsRead($connection, $messageId)
     {
         $message = MessageRepository::loadMessageById($connection, $messageId);
         $message->setIsMessageRead(1);

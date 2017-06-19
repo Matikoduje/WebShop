@@ -2,7 +2,7 @@
 
 class OrderProductsRepository
 {
-    static public function prepareConnection()
+    public static function prepareConnection()
     {
         $conn = new Connection();
         $conn = $conn->doConnect();
@@ -31,7 +31,7 @@ class OrderProductsRepository
         }
     }
 
-    static public function loadOrderProductsByOrderId(PDO $connection, $orderId)
+    public static function loadOrderProductsByOrderId(PDO $connection, $orderId)
     {
         $sql = "SELECT * FROM order_products WHERE orderId = :orderId";
         $stmt = $connection->prepare($sql);

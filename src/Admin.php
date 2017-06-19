@@ -50,14 +50,14 @@ class Admin
         return $this->adminPassword;
     }
 
-    public function setAdminPassword(string $adminPassword) // przy walidacji hasło zahashowane przekazane do obiektu obiektu
+    public function setAdminPassword(string $adminPassword)
     {
         $this->adminPassword = $adminPassword;
     }
 
     public function setAdminHashedPassword(string $adminPassword)
     {
-        $this->adminPassword = password_hash($adminPassword, PASSWORD_BCRYPT); // na stałe do bazy danych / przy zmianie hasła
+        $this->adminPassword = password_hash($adminPassword, PASSWORD_BCRYPT);
     }
 
 }

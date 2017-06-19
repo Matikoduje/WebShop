@@ -3,7 +3,7 @@
 class OrderRepository
 {
 
-    static public function prepareConnection()
+    public static function prepareConnection()
     {
         $conn = new Connection();
         $conn = $conn->doConnect();
@@ -31,7 +31,7 @@ class OrderRepository
         $conn = null;
     }
 
-    static public function loadOrderById($id, $userId)
+    public static function loadOrderById($id, $userId)
     {
         $conn = self::prepareConnection();
 
@@ -110,7 +110,7 @@ class OrderRepository
         }
     }
 
-    static public function loadAllOrders(PDO $connection)
+    public static function loadAllOrders(PDO $connection)
     {
         $sql = "SELECT * FROM orders";
         $stmt = $connection->prepare($sql);
@@ -135,7 +135,7 @@ class OrderRepository
 
     }
 
-    static public function loadAllOrdersByUserId (PDO $connection, $userId)
+    public static function loadAllOrdersByUserId (PDO $connection, $userId)
     {
         $sql = "SELECT * FROM orders WHERE userId = :userId";
         $stmt = $connection->prepare($sql);
@@ -161,7 +161,7 @@ class OrderRepository
 
     }
 
-    static public function loadOrderByOrderId (PDO $connection, $orderId)
+    public static function loadOrderByOrderId (PDO $connection, $orderId)
     {
         $sql = "SELECT * FROM orders WHERE orderId = :orderId";
         $stmt = $connection->prepare($sql);
@@ -184,7 +184,7 @@ class OrderRepository
         return $order;
     }
 
-    static public function updateOrder(PDO $connection, Order $order)
+    public static function updateOrder(PDO $connection, Order $order)
     {
         $userId = $order->getUserId();
         $orderStatusId = $order->getOrderStatusId();

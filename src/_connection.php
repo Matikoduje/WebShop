@@ -9,13 +9,3 @@ try {
     $format = "Error: %s";
     echo sprintf($format, $e->getMessage());
 }
-
-//$stmt = $connection->query("SELECT adminPassword FROM admins WHERE adminId = 1");
-//foreach ($stmt as $item) {
-//    var_dump(password_verify("adminPZ1", $item['adminPassword']));
-//}
-
-//$hashedPassword = password_hash("admin", PASSWORD_DEFAULT);
-//$stmt = $connection->query(
-//    "INSERT INTO admins (adminEmail, adminLogin, adminPassword)
-//              VALUES ('admin@wp.pl', 'admin', '$hashedPassword')");

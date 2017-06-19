@@ -2,7 +2,7 @@
 
 class InvoiceRepository
 {
-    static public function prepareConnection()
+    public static function prepareConnection()
     {
         $conn = new Connection();
         $conn = $conn->doConnect();

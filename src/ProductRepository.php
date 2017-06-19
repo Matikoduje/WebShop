@@ -2,7 +2,7 @@
 
 class ProductRepository
 {
-    static public function save(PDO $connection, Product $product)
+    public static function save(PDO $connection, Product $product)
     {
         $id = $product->getProductId();
         $name = $product->getProductName();
@@ -44,7 +44,7 @@ class ProductRepository
         }
     }
 
-    static public function loadProductById(PDO $connection, $productId)
+    public static function loadProductById(PDO $connection, $productId)
     {
         $sql = "SELECT * FROM products WHERE productId = :id";
         $stmt = $connection->prepare($sql);
@@ -62,7 +62,7 @@ class ProductRepository
         return $product;
     }
 
-    static public function getProductInfo(PDO $connection, $productId, $info)
+    public static function getProductInfo(PDO $connection, $productId, $info)
     {
         $sql = "SELECT " . $info . " FROM products WHERE productId = :id";
         $stmt = $connection->prepare($sql);
@@ -74,7 +74,7 @@ class ProductRepository
         return $info;
     }
 
-    static public function loadAllProducts(PDO $connection)
+    public static function loadAllProducts(PDO $connection)
     {
         $sql = "SELECT * FROM products";
         $stmt = $connection->prepare($sql);
@@ -93,14 +93,14 @@ class ProductRepository
         return $productsArray;
     }
 
-    static public function setCategoryForProduct($connection, $productId, $productCategoryId)
+    public static function setCategoryForProduct($connection, $productId, $productCategoryId)
     {
         $product = ProductRepository::loadProductById($connection, $productId);
         $product->setProductCategory($productCategoryId);
         ProductRepository::save($connection, $product);
     }
 
-    static public function changeInventory(PDO $connection, $productId, $quantity)
+    public static function changeInventory(PDO $connection, $productId, $quantity)
     {
         $product = ProductRepository::loadProductById($connection, $productId);
         $currentInventory = $product->getProductQuantity();
@@ -114,7 +114,7 @@ class ProductRepository
         }
     }
 
-    static public function removeProduct(PDO $connection, $productId)
+    public static function removeProduct(PDO $connection, $productId)
     {
         $sql = "DELETE FROM products WHERE productId = :id";
         $stmt = $connection->prepare($sql);
@@ -123,7 +123,7 @@ class ProductRepository
         return $result;
     }
 
-    static public function saveImageForProduct(PDO $connection, $productId)
+    public static function saveImageForProduct(PDO $connection, $productId)
     {
         $fileName = $_FILES['imageFile']['name'];
         $path = '../images/' . $productId . '/';
@@ -139,7 +139,7 @@ class ProductRepository
         };
     }
 
-    static public function loadLastThreeProducts(PDO $connection)
+    public static function loadLastThreeProducts(PDO $connection)
     {
         $sql = 'SELECT * FROM (SELECT * FROM products ORDER BY productId DESC LIMIT 3) as p ORDER BY productId';
         $stmt = $connection->prepare($sql);
