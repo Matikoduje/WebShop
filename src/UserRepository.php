@@ -125,11 +125,6 @@ class UserRepository implements RepositoryInterface
         $this->conn = null;
     }
 
-    public function remove()
-    {
-        // TODO: Implement remove() method.
-    }
-
     static public function loadAllUsers(PDO $connection) //++
     {
         $sql = "SELECT * FROM users";

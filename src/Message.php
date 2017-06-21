@@ -12,6 +12,18 @@ class Message
     private $messageTitle;
     private $messageDate;
 
+    public function __construct()
+    {
+        $this->messageId = -1;
+        $this->adminId = -1;
+        $this->userId = -1;
+        $this->messageText = "";
+        $this->isMessageSent = 0;
+        $this->isMessageRead = 0;
+        $this->messageTitle = "";
+        $this->setMessageDate();
+    }
+
     public function getMessageTitle()
     {
         return $this->messageTitle;
@@ -30,18 +42,6 @@ class Message
     public function setMessageDate()
     {
         $this->messageDate = date('Y-m-d');
-    }
-
-    public function __construct()
-    {
-        $this->messageId = -1;
-        $this->adminId = -1;
-        $this->userId = -1;
-        $this->messageText = "";
-        $this->isMessageSent = 0;
-        $this->isMessageRead = 0;
-        $this->messageTitle = "";
-        $this->setMessageDate();
     }
 
     public function getMessageId(): int
