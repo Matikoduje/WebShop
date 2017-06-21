@@ -1,7 +1,6 @@
 <?php
 
 function __autoload($className)
-
 {
     include_once '../../src/' . $className . '.php';
 }
