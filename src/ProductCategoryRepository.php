@@ -2,7 +2,7 @@
 
 class ProductCategoryRepository
 {
-    static public function save(PDO $connection, ProductCategory $category)
+    public static function save(PDO $connection, ProductCategory $category)
     {
         $id = $category->getProductCategoryId();
         $name = $category->getProductCategoryName();
@@ -29,7 +29,7 @@ class ProductCategoryRepository
         }
     }
 
-    static public function loadProductCategoryById(PDO $connection, $productCategoryId)
+    public static function loadProductCategoryById(PDO $connection, $productCategoryId)
     {
         $sql = "SELECT * FROM products_category WHERE productCategoryId = :id";
         $stmt = $connection->prepare($sql);
@@ -43,7 +43,7 @@ class ProductCategoryRepository
         return $productCategory;
     }
 
-    static public function loadAllProductCategories (PDO $connection)
+    public static function loadAllProductCategories (PDO $connection)
     {
         $sql = "SELECT * FROM products_category";
         $stmt = $connection->prepare($sql);
@@ -58,7 +58,7 @@ class ProductCategoryRepository
         return $categoriesArray;
     }
 
-    static public function removeProductCategory(PDO $connection, $productCategoryId)
+    public static function removeProductCategory(PDO $connection, $productCategoryId)
     {
         $sql = "DELETE FROM products_category WHERE productCategoryId = :id";
         $stmt = $connection->prepare($sql);

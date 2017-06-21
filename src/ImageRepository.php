@@ -3,7 +3,7 @@
 
 class ImageRepository
 {
-    static public function save(PDO $connection, Image $image)
+    public static function save(PDO $connection, Image $image)
     {
         $imageId = $image->getImageId();
         $productId = $image->getProductId();
@@ -23,7 +23,7 @@ class ImageRepository
         return false;
     }
 
-    static public function getImageLinksByProduct(PDO $connection, Product $product)
+    public static function getImageLinksByProduct(PDO $connection, Product $product)
     {
         $linksArray = [];
         $productId = $product->getProductId();

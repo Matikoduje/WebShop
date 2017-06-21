@@ -90,8 +90,4 @@ class ProductRepositoryTest extends AbstractDatabaseTest
 
     }
 
-//    public function testSaveImageForProduct()
-//    {
-//
-//    }
 }
